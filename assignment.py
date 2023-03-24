@@ -5,11 +5,14 @@ import sys
 from unicodedata import category
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
-nltk.download('vader_lexicon')
+from sklearn.metrics import SCORERS
+
+nltk.download("vader_lexicon")
 from thefuzz import fuzz
 import numpy as np
 from sklearn.manifold import MDS
 import matplotlib.pyplot as plt
+
 
 # Part 1: Cleaning the File
 def process_file(filename, skip_header=False):
@@ -105,7 +108,7 @@ def top_10_words(book):
     """
     This sort the dictionary in desceding order and return the top 10 most appeared words in the book.
     """
-    t = most_common(book,excluding_stopwords=True)
+    t = most_common(book, excluding_stopwords=True)
     result = {}
     for freq, word in t[:10]:
         result[word] = freq
@@ -149,6 +152,19 @@ def top_nonoverlappingwords(book_1, book_2):
             list_nonoverlapping.append(i)
     return list_nonoverlapping
 
+def count_marr_words(book):
+    marr_count = 0
+    book_string = str(book)
+    final_book = book_string.lower()
+    for word in final_book.split():
+        if 'marr' in word:
+            marr_count += 1
+        elif 'mar' in word and len(word) > 4:
+            # Check for variations like "marriage", "married", etc.
+            marr_count += 1
+    return marr_count
+
+
 # Part 3: Natural Language Processing
 def sentiment(book):
     score = SentimentIntensityAnalyzer().polarity_scores(book)
@@ -162,46 +178,33 @@ def text_similarity(book1, book2):
     result = fuzz.ratio(book1, book2)
     return result
 
-#Part 5: Text Clustering
-# these are the similarities computed from the previous section
-#To be changed
-S = np.asarray([[1., 0.90850572, 0.96451312, 0.97905034, 0.78340575],
-    [0.90850572, 1., 0.95769915, 0.95030073, 0.87322494],
-    [0.96451312, 0.95769915, 1., 0.98230284, 0.83381607],
-    [0.97905034, 0.95030073, 0.98230284, 1., 0.82953109],
-    [0.78340575, 0.87322494, 0.83381607, 0.82953109, 1.]])
 
-# dissimilarity is 1 minus similarity
-dissimilarities = 1 - S
+# Part 5: Text Visualization
 
-# compute the embedding
-coord = MDS(dissimilarity='precomputed').fit_transform(dissimilarities)
 
-plt.scatter(coord[:, 0], coord[:, 1])
-
-# Label the points
-for i in range(coord.shape[0]):
-    plt.annotate(str(i), (coord[i, :]))
-
-plt.show()
 
 def main():
-    je = process_file('janeeyre.txt', skip_header=False)
-    lw = process_file('littlewomen.txt', skip_header=False)
-    je_nltk = open('janeeyre.txt', 'r', encoding='utf-8').read()
-    lw_nltk = open('littlewomen.txt',
-                    'r', encoding='utf-8').read()
+    je = process_file("janeeyre.txt", skip_header=False)
+    lw = process_file("littlewomen.txt", skip_header=False)
+    je_nltk = open("janeeyre.txt", "r", encoding="utf-8").read()
+    lw_nltk = open("littlewomen.txt", "r", encoding="utf-8").read()
 
-    print(f'The total words in Jane Eyre are {total_words(je)}')
-    print(f'The total words in Little Women are {total_words(lw)}')
-    print(f'The top 10 words in Jane Eyre are:{top_10_words(je)}')
-    print(f'The top 10 words in Little Women are:{top_10_words(lw)}')
-    print(f'The overlapping words in the top 10 common words in two books are:{top_nonoverlappingwords(je, lw)}')
-    print(f'The overlapping words in the top 10 common words in two books are:{top_overlappingwords(je, lw)}')
-    print(f'The sentiment analysis result of Adventures is{sentiment(je_nltk)}')
-    print(f'The sentiment analysis result of The Return of Sherlock Holmes is{sentiment(lw_nltk)}')
-    print(f'The text similarity based in the fuzz ratio is {text_similarity(je,lw)}%')
+    print(f"The total words in Jane Eyre are {total_words(je)}")
+    print(f"The total words in Little Women are {total_words(lw)}")
+    print(f"The top 10 words in Jane Eyre are:{top_10_words(je)}")
+    print(f"The top 10 words in Little Women are:{top_10_words(lw)}")
+    print(
+       f"The non-overlapping words in the top 10 common words in two books are:{top_nonoverlappingwords(je, lw)}"
+    )
+    print(
+       f"The overlapping words in the top 10 common words in two books are:{top_overlappingwords(je, lw)}"
+    )
+    print(f'The occurence of words related to marriage in Jane Eyre are {count_marr_words(je)}')
+    print(f'The occurence of words related to marriage in the Little Women are {count_marr_words(lw)}')
+    print(f"The sentiment analysis result of Jane Eyre is{sentiment(je_nltk)}")
+    print(f"The sentiment analysis result of the Little Women is{sentiment(lw_nltk)}")
+    print(f"The text similarity based in the fuzz ratio is {text_similarity(je,lw)}%")
+    
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
