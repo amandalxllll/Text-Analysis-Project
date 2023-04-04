@@ -16,7 +16,7 @@ To begin, I utilized url.lib to import the two necessary txt. files into Python 
 Moving on, I first ran a total word count to ensure that the books were of a similar length. Then, I analyzed the top 10 words to compare if there were any similarities in wording between the two books. Additionally, I ran a program to compare the differences between the two books. Furthermore, I conducted a program to determine the frequency of the words 'marry', 'marriage', 'marrying', and 'married' to determine their importance in the book.
 After gaining a general understanding of the books, I conducted Natural Language Processing and used sentiment analysis to determine the writing style of the two authors. The writing style was assessed using three elements: negative, positive, and neutral. In order to compare the true text similarity, I conducted a text similarity test since the previous results obtained from overlapping words had interesting findings. Initially, I had planned to run text clustering (part I have to make a chioce), but the text similarity results indicated that it would not generate any useful results. Chatgpt haven't help much while I'm planning my implementation, though it did confused me two days for using text_clustering with the sentiment analysis. It first explained the concept in a really techinical way which I don't quite get it, and then started to give me examples using text clustering to do 
 sentimental analysis. 
-![alt text](images\chatgpt_implementation.png)
+![alt text](images/chatgpt_implementation.png)
 
 
 
@@ -26,13 +26,13 @@ Present what you accomplished in your project:
 There are several things I discovered pretty interesting. First, the two books have similar word counts though written by different writers from different country. The total words in Jane Eyre are 191598 and the total words in Little Women are 194801. The total word counts makes them great options for analyzing writing styles. 
 
 When examining the results of the similarity test, I conducted a two-part analysis focused on wording and ratio. I discovered that two books shared five common words: "will," "one," "said," "like," and "little." While these words don't carry any significant meaning on their own, "will" and "like" denote powerful individual emotions and determination. Additionally, the frequency of words related to marriage was also comparable, with 53 occurrences in "Little Women" and 46 in "Jane Eyre." This observation is intriguing as it suggests that both books touch upon the topic of marriage with similar frequency, providing readers with valuable insights for personal growth and marriage.The fuzz ratio is 0% between two books. Although this result was surprising to me, it makes total sense since one writer is British and another is American. The difference in two British-English and American-English can be causing this 0 in similarity. The books are heavily scenario based, so difference in daily expression can be causing this result
-![alt text](images\total.png)
-![alt text](images\overlapping.png)
-![alt text](images\marriageword.png)
-![alt text](images\chatgpt_implementation.png)
+![alt text](images/total.png)
+![alt text](images/overlapping.png)
+![alt text](images/marriageword.png)
+![alt text](images/chatgpt_implementation.png)
 
 Regarding the sentimental analysis, I executed a sentiment ratio test on each book and received comparable results, which aligned with my expectations. Given that both books center around women's personal growth, I didn't anticipate any significant difference in the sentiment test. However, I did observe a slight variation between "Jane Eyre" and "Little Women." "Jane Eyre" exhibited a marginally higher ratio of negative words and a lower ratio of positive words, indicating a slightly more negative sentiment in comparison to "Little Women." This observation corresponds with my own personal reading experience of both books.
-![alt text](images\sentimentanalysis.png)
+![alt text](images/sentimentanalysis.png)
 
 **4. Reflection** (~1-2 paragraphs)
 
